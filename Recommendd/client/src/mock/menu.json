@@ -1,0 +1,20 @@
+{
+  "menu": [
+    {
+      "submenu": "用户画像系统",
+      "menuGroup": [
+        {
+          "label": "首页",
+          "to":"/admin/"
+        },
+        {
+          "label": "模型展示",
+          "to":"/admin/ShowIndex"
+        },{
+          "label": "生成模型",
+          "to":"/admin/GenerateModel"
+        }
+      ]
+    }
+  ]
+}

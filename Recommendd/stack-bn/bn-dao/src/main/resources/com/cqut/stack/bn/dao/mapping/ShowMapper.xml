@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqut.stack.bn.dao.mapper.ShowMapper">
+    <!-- 获取训练集数据 -->
+    <select id="getTrainData" resultType="com.cqut.stack.bn.entity.entity.Train" >
+        select
+        id,
+		proj_name projName,
+		proj_code projCode,
+		new_proj_item projItem,
+		call_unit callUnit,
+		region,
+		ancm_time ancmTime,
+		actual_price actualPrice,
+		call_unit_address callUnitAddress,
+		proj_rel_p projRelP,
+		proj_rel_m projRelM,
+		agent_unit_name agentUnitName,
+		agent_unit_address agentUnitAddress,
+		agent_unit_p agentUnitP,
+		agent_unit_m agentUnitM,
+		purchase_m purchaseM ,
+		sourse_url sourseUrl ,
+		bid_time bidTime,
+		provide_unit provideUnit,
+		provide_address provideAddress,
+		review_time reviewTime,
+		review_place reviewPlace,
+		pxy_fee_standard pxyFeeStandard,
+		pxy_fee pxyFee ,
+		title  ,
+		web_site webSite,
+		source_web_name sourceWebName
+        from win_bid_government
+        where
+		provide_unit = '万达信息股份有限公司'
+		limit 10
+<!--        (ISNULL(#{id}) || age LIKE CONCAT('%', #{id}, '%'))-->
+<!--		<if test="words != null and words != ''">-->
+<!--			and words LIKE CONCAT('%', #{words}, '%')-->
+<!--		</if>-->
+    </select>
+    <!-- 获取训练结果 -->
+    <select id="generateModel" resultType="com.cqut.stack.bn.entity.entity.Show" parameterType="java.lang.String">
+        SELECT
+	(
+		CASE age
+		WHEN 0 THEN
+			'0-18岁'
+		WHEN 1 THEN
+			'0-18岁'
+		WHEN 2 THEN
+			'19-23岁'
+		WHEN 3 THEN
+			'24-30岁'
+		WHEN 4 THEN
+			'31-40岁'
+		WHEN 5 THEN
+			'41-50岁'
+		WHEN 6 THEN
+			'51-999岁'
+		ELSE
+			'null'
+		END
+	) AS age,
+	(
+		CASE Gender
+		WHEN 0 THEN
+			'男性'
+		WHEN 1 THEN
+			'男性'
+		WHEN 2 THEN
+			'女性'
+		ELSE
+			'null'
+		END
+	) AS gender,
+	(
+		CASE Education
+		WHEN 0 THEN
+			'高中'
+		WHEN 1 THEN
+			'博士'
+		WHEN 2 THEN
+			'硕士'
+	WHEN 3 THEN
+			'大学生'
+	WHEN 4 THEN
+			'高中'
+	WHEN 5 THEN
+			'初中'
+	WHEN 6 THEN
+			'小学'
+		ELSE
+			'null'
+		END
+	) AS education,
+	prob,
+	topic
+FROM
+	keyprobs
+WHERE
+	ID = #{id,jdbcType=VARCHAR}
+    </select>
+	<!-- 保存最终结果 -->
+    <insert id="saveModel" parameterType="com.cqut.stack.bn.entity.entity.Show">
+	   INSERT INTO keyprobs ( ID, age, Gender, Education, words, prob)
+                       VALUES
+                       ( #{id}, #{age}, #{gender}, #{education}, #{words}, #{prob} );
+    </insert>
+	<!-- 更新训练结果 -->
+	<update id="updateModel" parameterType="com.cqut.stack.bn.entity.entity.Show">
+	  UPDATE keyprobs
+	  SET age = #{age},
+	      Gender = #{gender},
+	      Education = #{education},
+	      words = #{words},
+	      prob = #{prob}
+	  WHERE ID = #{id}
+    </update>
+
+	<select id="getUserId" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT
+			user_id userId
+		FROM
+			sys_user
+		WHERE
+			user_name = #{userName}
+	</select>
+	<select id="getProjectItems" resultType="java.lang.String">
+	SELECT DISTINCT
+	proj_item
+    FROM
+	call_bid_government
+	</select>
+</mapper>

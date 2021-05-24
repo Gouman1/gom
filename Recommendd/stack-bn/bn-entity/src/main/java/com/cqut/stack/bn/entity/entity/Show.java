@@ -1,0 +1,87 @@
+package com.cqut.stack.bn.entity.entity;
+
+import java.util.List;
+
+public class Show {
+
+
+    private String id;
+
+    private String age;
+
+    private String gender;
+
+    private String education;
+
+    private String topic;
+
+    private String prob;
+
+    private List<List<String>> probs;
+
+    private String words;
+
+    public String getWords() {
+        return words;
+    }
+
+    public void setWords(String words) {
+        this.words = words;
+    }
+
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getProb() {
+        return prob;
+    }
+
+    public void setProb(String prob) {
+        this.prob = prob;
+    }
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public List<List<String>> getProbs() {
+        return probs;
+    }
+
+    public void setProbs(List<List<String>> probs) {
+        this.probs = probs;
+    }
+
+}
